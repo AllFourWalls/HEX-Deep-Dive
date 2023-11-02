@@ -1,0 +1,67 @@
+Since I see a lot of confusion in newbies trying to learn basic concepts in Assembly, I made this kind of a cheatsheet.
+I decided to summarize all the rules and key points when working with Memory Addressing and Hexadecimals.
+I hope my modest addition to the group helps everyone who is affraid of getting into Assembler.
+
+Memory Address can start at any value as long as it is 8 bits long (which is 1 byte) and increases from the last bit.
+The number to be inserted into that Memory Address is also 8 bits long (1 byte again) and can have any value as well.
+
+Both the HEX number to be inserted and the Memory Address (which is also represented in HEX) share one common thing: LEADING ZEROS
+So at first glance they may seem that they have different lenght when they actually share the same lenght and here is an example:
+
+Memory Address: 0x123000 (real number 0x00123000)
+Number to be inserted: (0x123) (real number 0x00000123)
+
+As you can see they look as they have different lenght but when you add the leading zeros, it is obvious that the lenght is the same.
+IMPORTANT: Leading zeros are always added to the left! DO NOT ADD Leading zeros to the right!
+
+0x456 == 0x45600000 # WRONG
+0x456 == 0x00000456 # CORRECT
+
+Memory address is increased by one each time to store the next part of the number to be inserted (1 part == 2 bits)
+
+Memory Address: 0x00000001
+Number to be inserted: 0x12345678
+
+0x00000001 stores 0x78
+0x00000002 stores 0x56
+0x00000003 stores 0x34
+0x00000004 stores 0x12
+
+As you can see the Memory Address goes up by one, but the number to be inserted stays the same and it is just splitted.
+We increase the number to be inserted ONLY AND ONLY when we need the Memory Address to go beyond its defined boundery.
+This is because the number to be inserted is exhausted and there are no any left parts from it to be splitted over.
+
+New Starting Memory Address: 0x00000005
+New Number to be inserted: 0x12345679
+
+0x00000005 stores 0x79
+0x00000006 stores 0x56
+0x00000007 stores 0x34
+0x00000008 stores 0x12
+
+Start the process all over again but keep in mind that it is easy to confuse how to increase 9 to 10, you MUST NOT substitute 9 with 10, BUT 9 with A.
+
+0x12345679 TO 0x123456710 # WRONG
+0x12345679 TO 0x1234567A # CORRECT
+
+NOTE: Considering the HEX rules, the bit gets exhausted when it reaches 'F' due to HEX being 0-9 and A-F
+If you want to increase further you have to move one digit left, but not before the last digit exhausts!
+
+0x1234567E TO 0x1234568E # WRONG
+0x1234567E TO 0x1234567F # CORRECT
+
+The same way there is no '10' after '9', there is no 'G' after 'F'!
+
+0x1234567F TO 0x1234567G # WRONG
+0x1234567F TO 0x1234568F # CORRECT
+
+Lowest Memory Address Value 0x00000000
+Highest Memory Address Value: 0xFFFFFFFF
+
+NOTE: THE EXAMPLES PRESENTED ARE BASED ON LITTLE ENDIAN!
+For the Big Endian and HEX rules you can refer to Google.
+Ideas are basically the same, just the other way round.
+
+
+
+ 
